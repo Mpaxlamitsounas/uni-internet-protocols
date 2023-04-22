@@ -75,7 +75,7 @@ def validate_args():
      return True, ""
 
 def calculate():
-     result = 0
+     result = ""
      match function:
           case "+":
                result = sum(arguments)
