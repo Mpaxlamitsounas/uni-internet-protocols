@@ -75,7 +75,7 @@ def validate_args():
      return True, ""
 
 def calculate():
-     result = ""
+     result = "In \"" + request + "\":\n"
      match function:
           case "+":
                result = sum(arguments)

@@ -22,7 +22,7 @@ def read_arguments(function):
         case "-" | "/" | "%":
             num_of_args = 2
 
-    print("Enter {} arguments".format(num_of_args))
+    print("Enter {} arguments, one by one".format(num_of_args))
     arguments = []
     for _ in range(num_of_args):
         arguments.append(input())
@@ -45,7 +45,6 @@ def demo():
         
         try:
             response = client_socket.recv(256).decode("UTF-8")
-            print(response)
             if len(response) > 0:
                 print("Response: " + response)
             else:
