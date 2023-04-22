@@ -70,7 +70,7 @@ def validate_args():
      if len(args_out_of_range) > 0: 
           return False, "Argument(s) {} out of allowed range of [{}, {}]".format(", ".join(args_out_of_range), allowed_range.start, allowed_range.stop)
 
-     # Δεν γίνεται να επιστρέψει σφάλμα για λάθος αριθμό argument και για τα όρια τους ταυτόχρονα
+     # Δεν γίνεται να επιστραφεί σφάλμα για παραπάνω από 1 error διαφορετικού είδους
      
      return True, ""
 
