@@ -13,6 +13,7 @@ def start_client():
 
 # Διαβάζει τον σωστό αριθμό argument από τον χρήστη
 def read_arguments(function):
+    num_of_args = 0
     match function:
         case "+":
             num_of_args = 4
