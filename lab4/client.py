@@ -34,7 +34,7 @@ def read_arguments(function):
         try:
             arguments[i] = int(arg)
             if arguments[i] not in range(0, 60001):
-                args_out_of_range.append(arguments[i])
+                args_out_of_range.append(str(arguments[i]))
         except:
             args_not_digits.append(arg)
             
@@ -67,9 +67,9 @@ def demo():
                 if len(response) > 0:
                     print("Response: \n" + response)
                 else:
-                    print("Did not receive response") 
+                    print("Did not receive response\n") 
             except:
-                print("Did not receive response")
+                print("Did not receive response\n")
                 
             client_socket.close()
         else:

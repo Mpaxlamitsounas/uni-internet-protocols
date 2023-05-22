@@ -1,0 +1,280 @@
+
+
+
+
+Education                                                 I.K. Koulouras
+Internet-Draft                                     University of Piraeus
+Intended status: Informational                               22 May 2023
+Expires: 23 November 2023
+
+
+                       Semester project for 2023
+                    draft-koulouras-unipi-project-00
+
+Abstract
+
+   The purpose of this document is to explain the protocol implemented
+   for the lab of the class.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 23 November 2023.
+
+Copyright Notice
+
+   Copyright (c) 2023 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+
+
+
+
+
+
+Koulouras               Expires 23 November 2023                [Page 1]
+
+Internet-Draft          Semester project for 2023               May 2023
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Requirements Language . . . . . . . . . . . . . . . . . .   2
+   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   2
+   3.  Protocol Overview . . . . . . . . . . . . . . . . . . . . . .   3
+   4.  Protocol Header Format  . . . . . . . . . . . . . . . . . . .   3
+     4.1.  Function symbol field . . . . . . . . . . . . . . . . . .   3
+     4.2.  Argument fields . . . . . . . . . . . . . . . . . . . . .   4
+     4.3.  Content . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   4
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   8.  Informative References  . . . . . . . . . . . . . . . . . . .   5
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   5
+
+1.  Introduction
+
+   The purpose of this document is to explain and specify the usage of
+   all the headers of the protocol designed by Ioannis Koulouras for the
+   lab of the class.
+
+   This document follows the keyword use as specified in RFC2119
+   [RFC2119].
+
+1.1.  Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC2119 [RFC2119].
+
+2.  Terminology
+
+   This document uses the following terms:
+
+      Protocol - A pre-approved communication language between two end
+      systems.
+
+      Server - The part of the communication protocol that receives the
+      request.  In this project the server is an endpoint for a
+      database.
+
+      Client - The part of the communication protocol that starts the
+      request.  In this project the client is a student application that
+      requests subscription to the student's database.
+
+      byte - An 8-bit octet
+
+
+
+
+Koulouras               Expires 23 November 2023                [Page 2]
+
+Internet-Draft          Semester project for 2023               May 2023
+
+
+      char - A byte representing a character
+
+      array - A data structure that houses same type data in series
+
+3.  Protocol Overview
+
+   Figure 1 provides a detailed high-level overview of the message
+   exchange between the server and the client.
+
+   The client sends a request to the server with the type of operation
+   and the number to apply the operation on.
+
+   The server responds with a string containing the number and/or error
+   messages, up to 256 bytes in length.
+
+                          Server                        Client
+                          |                                  |
+                          |        Request from client       |
+                          | <------------------------------- |
+                          |                                  |
+                          |       Response from server       |
+                          | -------------------------------> |
+
+                         Figure 1: Message Exchange
+
+4.  Protocol Header Format
+
+   The following headers are required in order to satisfy all the
+   requirements
+
+   This is the structure of the message used to communicate between the
+   client and the server
+
+
+                 Function
+                  symbol          Arguments           Content
+                  +-----+------+------+------+------+---------+
+                  |  c  |  a1  |  a2  |  a3  |  a4  |   con   |
+                  +-----+------+------+------+------+---------+
+
+
+                          Figure 2: Message format
+
+4.1.  Function symbol field
+
+   Specifies to the server which arithmetic operation is should apply to
+   the arguments.
+
+
+
+
+Koulouras               Expires 23 November 2023                [Page 3]
+
+Internet-Draft          Semester project for 2023               May 2023
+
+
+   *  Function - 1 byte char
+
+   *  The character SHOULD be encoded using UTF-8.
+
+   *  When the server responds to the client, its value SHOULD be a 0
+      represented as a character
+
+4.2.  Argument fields
+
+   Contains a number the server will apply the function-arithmetic
+   operation to.
+
+   *  Argument - 2 byte unsigned integer
+
+   *  The message MUST include 4 arguments.
+
+   *  Arguments after the absolutely necessary for the specified
+      function field SHOULD be set to 0.
+
+   *  When the server responds to the client, all argument fields should
+      be set to 0.
+
+4.3.  Content
+
+   Contains the response from the server to the client.
+
+   *  Content - array of 256 1 byte chars
+
+   *  The field SHOULD be encoded using UTF-8.
+
+   *  Remaining space MUST be padded with NULL bytes.
+
+   *  When a client sends a request to the server, this field SHOULD be
+      only NULL bytes.
+
+5.  Acknowledgements
+
+   The authors would like to acknowledge all the students who will
+   attempt to define their own specification.
+
+   The authors would also like to thank all the students for their
+   patients and their participation.
+
+6.  IANA Considerations
+
+   This memo makes no requests to IANA.
+
+   You could though! ;)
+
+
+
+Koulouras               Expires 23 November 2023                [Page 4]
+
+Internet-Draft          Semester project for 2023               May 2023
+
+
+7.  Security Considerations
+
+   There is no security in this specification.  This is a prototype and
+   all messages should be sent in cleartext over the wire.
+
+   This is a VERY unsecure protocol.  Please do not implement.
+
+8.  Informative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+Author's Address
+
+   Ioannis Koulouras
+   University of Piraeus
+   Department of Digital Systems
+   18534 Piraeus
+   Greece
+   Email: e20075@unipi.gr
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koulouras               Expires 23 November 2023                [Page 5]

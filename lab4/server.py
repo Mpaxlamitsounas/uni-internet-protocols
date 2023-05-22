@@ -62,7 +62,12 @@ def validate_args(function, arguments):
 
 def calculate(function, arguments, panic):
     result = ""
-    if (not panic and arguments[1] != 0):
+    
+    if function == '/' and arguments[1] == 0:
+        result += "Cannot divide by 0"
+    elif function == '%' and arguments[1] == 0:
+        result += "Modulo of 0 is undefined"
+    elif not panic:
         match function:
             case "+":
                 result = sum(arguments)
@@ -78,17 +83,7 @@ def calculate(function, arguments, panic):
                     
             case "%":
                 result = arguments[0] % arguments[1]
-        
-    else:
-        match function:
-            case "/":
-                if arguments[1] == 0: 
-                    result += "Cannot divide by 0"
-                    
-            case "%":
-                if arguments[1] == 0: 
-                    result += "Modulo of 0 is undefined"
-                    
+
     return result
 
 def threaded_client(connection_socket, addr):
@@ -115,7 +110,7 @@ def threaded_client(connection_socket, addr):
             result += error_message
             
         if not panic:
-            result = "\t" + str(calculate(function, arguments, panic)) + "\n"
+            result = "\t" + str(calculate(function, arguments, panic))
 
         # Εμφανίζει το request και αποτέλεσμα στο τέλος
         print(function + ' ' + str(arguments) + " : \n" + result)
