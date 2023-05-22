@@ -101,7 +101,7 @@ def calculate(request, function, arguments, panic):
                      
      return result
 
-def threaded_client(connection_socker, addr):
+def threaded_client(connection_socket, addr):
      try:
           request = connection_socket.recv(512).decode("UTF-8")
      except:
