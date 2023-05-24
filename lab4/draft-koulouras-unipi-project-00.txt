@@ -139,7 +139,7 @@ Internet-Draft          Semester project for 2023               May 2023
                           |       Response from server       |
                           | -------------------------------> |
 
-                         Figure 1: Message Exchange
+                          Figure 1: Message format
 
 4.  Protocol Header Format
 
