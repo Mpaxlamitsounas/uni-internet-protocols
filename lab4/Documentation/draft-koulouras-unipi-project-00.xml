@@ -115,7 +115,7 @@
     <t>The client sends a request to the server with the type of operation and the number to apply the operation on.</t>
     <t>The server responds with a string containing the number and/or error messages, up to 256 bytes in length.</t>
 
-    <figure title="Message Exchange" anchor="Exchange"> 
+    <figure title="Message format" anchor="Exchange"> 
       <artwork align="center"><![CDATA[
               Server                        Client
               |                                  |
