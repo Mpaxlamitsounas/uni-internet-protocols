@@ -4,8 +4,8 @@
 
 Education                                                 I.K. Koulouras
 Internet-Draft                                     University of Piraeus
-Intended status: Informational                               22 May 2023
-Expires: 23 November 2023
+Intended status: Informational                               24 May 2023
+Expires: 25 November 2023
 
 
                        Semester project for 2023
@@ -31,7 +31,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 November 2023.
+   This Internet-Draft will expire on 25 November 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Koulouras               Expires 23 November 2023                [Page 1]
+Koulouras               Expires 25 November 2023                [Page 1]
 
 Internet-Draft          Semester project for 2023               May 2023
 
@@ -109,14 +109,16 @@ Table of Contents
 
 
 
-Koulouras               Expires 23 November 2023                [Page 2]
+Koulouras               Expires 25 November 2023                [Page 2]
 
 Internet-Draft          Semester project for 2023               May 2023
 
 
-      char - A byte representing a character
+      char - A representation of a character using bytes
 
       array - A data structure that houses same type data in series
+
+      UTF-8 - A method of representing characters with bytes
 
 3.  Protocol Overview
 
@@ -142,20 +144,18 @@ Internet-Draft          Semester project for 2023               May 2023
 4.  Protocol Header Format
 
    The following headers are required in order to satisfy all the
-   requirements
+   requirements.
 
    This is the structure of the message used to communicate between the
    client and the server
 
+                       Function
+                       symbol          Arguments           Content
+                       +-----+------+------+------+------+---------+
+                       |  c  |  a1  |  a2  |  a3  |  a4  |   con   |
+                       +-----+------+------+------+------+---------+
 
-                 Function
-                  symbol          Arguments           Content
-                  +-----+------+------+------+------+---------+
-                  |  c  |  a1  |  a2  |  a3  |  a4  |   con   |
-                  +-----+------+------+------+------+---------+
-
-
-                          Figure 2: Message format
+                         Figure 2: A Header Format
 
 4.1.  Function symbol field
 
@@ -165,7 +165,7 @@ Internet-Draft          Semester project for 2023               May 2023
 
 
 
-Koulouras               Expires 23 November 2023                [Page 3]
+Koulouras               Expires 25 November 2023                [Page 3]
 
 Internet-Draft          Semester project for 2023               May 2023
 
@@ -175,7 +175,7 @@ Internet-Draft          Semester project for 2023               May 2023
    *  The character SHOULD be encoded using UTF-8.
 
    *  When the server responds to the client, its value SHOULD be a 0
-      represented as a character
+      represented as a character.
 
 4.2.  Argument fields
 
@@ -221,7 +221,7 @@ Internet-Draft          Semester project for 2023               May 2023
 
 
 
-Koulouras               Expires 23 November 2023                [Page 4]
+Koulouras               Expires 25 November 2023                [Page 4]
 
 Internet-Draft          Semester project for 2023               May 2023
 
@@ -277,4 +277,4 @@ Author's Address
 
 
 
-Koulouras               Expires 23 November 2023                [Page 5]
+Koulouras               Expires 25 November 2023                [Page 5]

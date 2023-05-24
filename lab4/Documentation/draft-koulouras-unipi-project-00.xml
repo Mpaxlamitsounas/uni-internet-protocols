@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!-- This template is for creating an Internet Draft using xml2rfc,
+     which is available here: http://xml.resource.org. -->
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!-- One method to get references from the online citation libraries.
+     There has to be one entity for each item to be referenced. 
+     An alternate method (rfc include) is described in the references. -->
+<!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+]>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<!-- used by XSLT processors -->
+<!-- For a complete list and description of processing instructions (PIs), 
+     please see http://xml.resource.org/authoring/README.html. -->
+<!-- Below are generally applicable Processing Instructions (PIs) that most I-Ds might want to use.
+     (Here they are set differently than their defaults in xml2rfc v1.32) -->
+<?rfc strict="no" ?>
+<!-- give errors regarding ID-nits and DTD validation -->
+<!-- control the table of contents (ToC) -->
+<?rfc toc="yes"?>
+<!-- generate a ToC -->
+<?rfc tocdepth="4"?>
+<!-- the number of levels of subsections in ToC. default: 3 -->
+<!-- control references -->
+<?rfc symrefs="yes"?>
+<!-- use symbolic references tags, i.e, [RFC2119] instead of [1] -->
+<?rfc sortrefs="yes"?>
+<!-- sort the reference entries alphabetically -->
+<!-- control vertical white space 
+     (using these PIs as follows is recommended by the RFC Editor) -->
+<?rfc compact="no"?>
+<!-- Start each main section on a new page -->
+<?rfc subcompact="no"?>
+<!-- keep one blank line between list items -->
+<!-- end of list of popular I-D processing instructions -->
+<rfc category="info" docName="draft-koulouras-unipi-project-00" ipr="trust200902">
+  <!-- category values: std, bcp, info, exp, and historic
+     ipr values: full3667, noModification3667, noDerivatives3667
+     you can add the attributes updates="NNNN" and obsoletes="NNNN" 
+     they will automatically be output with "(if approved)" -->
+
+  <!-- ***** FRONT MATTER ***** -->
+  <front>
+    <!-- The abbreviated title is used in the page header - it is only necessary if the 
+         full title is longer than 39 characters -->
+
+    <title>Semester project for 2023</title>
+
+    <!-- add 'role="editor"' below for the editors if appropriate -->
+
+    <!-- Another author who claims to be an editor -->
+
+	<author fullname="Ioannis Koulouras" initials="I.K." surname="Koulouras">
+			<organization>University of Piraeus</organization>
+			<address>
+				<postal>
+					<street>Department of Digital Systems</street>
+					<!-- Reorder these if your country does things differently -->
+					<city>Piraeus</city>
+					<region/>
+					<code>18534</code>
+					<country>Greece</country>
+				</postal>
+				<email>e20075@unipi.gr</email>
+				<!-- uri and facsimile elements may also be added -->
+			</address>
+		</author>
+
+    <date year="2023" />
+
+    <area>Edu</area>
+
+    <workgroup>Education</workgroup>
+
+    <keyword>Edu</keyword>
+    <keyword>Project</keyword>
+
+    <!-- Keywords will be incorporated into HTML output
+         files in a meta tag but they have no effect on text or nroff
+         output. If you submit your draft to the RFC Editor, the
+         keywords will be used for the search engine. -->
+
+    <abstract>
+      <t>The purpose of this document is to explain the protocol implemented for the lab of the class.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+	<t>The purpose of this document is to explain and specify the usage of all the headers of the protocol designed by Ioannis Koulouras for the lab of the class.</t>
+  <t>This document follows the keyword use as specified in <xref target="RFC2119">RFC2119</xref>.</t>
+
+  <section title="Requirements Language">
+    <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+  "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+  document are to be interpreted as described in <xref target="RFC2119" format="default">RFC2119</xref>.</t>
+  </section>
+	</section>
+	
+	<section anchor="Terminology" title="Terminology">
+
+	<t>This document uses the following terms:
+	<list style="hanging">
+    <t>Protocol - A pre-approved communication language between two end systems.</t>
+    <t>Server - The part of the communication protocol that receives the request. In this project the server is an endpoint for a database.</t>
+    <t>Client - The part of the communication protocol that starts the request. In this project the client is a student application that requests subscription to the student's database.</t>
+    <t>byte - An 8-bit octet</t>
+    <t>char - A representation of a character using bytes</t>
+    <t>array - A data structure that houses same type data in series</t>
+    <t>UTF-8 - A method of representing characters with bytes</t>
+  </list></t>
+    </section>
+
+	<section anchor="ProtoOverview" title="Protocol Overview">
+    <t><xref target="Exchange" /> provides a detailed high-level overview of the message exchange between the server and the client.</t>
+    <t>The client sends a request to the server with the type of operation and the number to apply the operation on.</t>
+    <t>The server responds with a string containing the number and/or error messages, up to 256 bytes in length.</t>
+
+    <figure title="Message Exchange" anchor="Exchange"> 
+      <artwork align="center"><![CDATA[
+              Server                        Client
+              |                                  |
+              |        Request from client       |
+              | <------------------------------- |
+              |                                  |
+              |       Response from server       |
+              | -------------------------------> |
+]]></artwork></figure>
+  </section>
+
+	<section anchor="Headers" title="Protocol Header Format" >
+    <t>The following headers are required in order to satisfy all the requirements.</t>
+    <t>This is the structure of the message used to communicate between the client and the server</t>
+
+    <figure title="A Header Format" anchor="RSHF"> <artwork align="center"><![CDATA[
+                Function
+                symbol          Arguments           Content
+                +-----+------+------+------+------+---------+
+                |  c  |  a1  |  a2  |  a3  |  a4  |   con   |
+                +-----+------+------+------+------+---------+
+      ]]></artwork></figure>
+ 
+  <section title="Function symbol field">
+
+    <t>Specifies to the server which arithmetic operation is should apply to the arguments.</t>
+    
+    <list style="symbols">
+      <t>Function - 1 byte char</t>
+      <t>The character SHOULD be encoded using UTF-8.</t>
+      <t>When the server responds to the client, its value SHOULD be a 0 represented as a character.</t>
+    </list>
+
+  </section>
+
+  <section title="Argument fields">
+
+    <t>Contains a number the server will apply the function-arithmetic operation to.</t>
+    
+    <list style="symbols">
+      <t>Argument - 2 byte unsigned integer</t>
+      <t>The message MUST include 4 arguments.</t>
+      <t>Arguments after the absolutely necessary for the specified function field SHOULD be set to 0.</t>
+      <t>When the server responds to the client, all argument fields should be set to 0.</t>
+    </list>
+  </section>
+
+  <section title="Content">
+
+    <t>Contains the response from the server to the client.</t>
+    
+    <list style="symbols">
+      <t>Content - array of 256 1 byte chars</t>
+      <t>The field SHOULD be encoded using UTF-8.</t>
+      <t>Remaining space MUST be padded with NULL bytes.</t>
+      <t>When a client sends a request to the server, this field SHOULD be only NULL bytes.</t>
+    </list>
+  </section>
+
+  
+  </section>
+  <section anchor="Acknowledgements" title="Acknowledgements">
+    <t>The authors would like to acknowledge all the students who will attempt to define their own specification.</t>
+    <t>The authors would also like to thank all the students for their patients and their participation.</t>
+  </section>
+
+
+    <!-- Possibly a 'Contributors' section ... -->
+
+    <section anchor="IANA" title="IANA Considerations">
+      <t>This memo makes no requests to IANA.</t>
+      <t>You could though! ;)</t>
+
+    </section>
+    <section anchor="Security" title="Security Considerations">
+      <t>There is no security in this specification. This is a prototype and all messages should be sent in cleartext over the wire.</t>
+      <t>This is a VERY unsecure protocol. Please do not implement.</t>
+    </section>
+  </middle>
+
+  <!--  *****BACK MATTER ***** -->
+
+  <back>
+    <!-- References split into informative and normative -->
+
+    <!-- There are 2 ways to insert reference entries from the citation libraries:
+     1. define an ENTITY at the top, and use "ampersand character"RFC2629; here (as shown)
+     2. simply use a PI "less than character"?rfc include="reference.RFC.2119.xml"?> here
+        (for I-Ds: include="reference.I-D.narten-iana-considerations-rfc2434bis.xml")
+
+     Both are cited textually in the same manner: by using xref elements.
+     If you use the PI option, xml2rfc will, by default, try to find included files in the same
+     directory as the including file. You can also define the XML_LIBRARY environment variable
+     with a value containing a set of directories to search.  These can be either in the local
+     filing system or remote ones accessed by http (http://domain/dir/... ).-->
+    <references title="Informative References">
+      &RFC2119;
+    </references>
+  </back>
+</rfc>
